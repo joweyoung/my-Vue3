@@ -5,11 +5,11 @@ export const useCounterStore = defineStore('counter', {
     count: 1
   }),
   getters: {
-    double: (state) => state.count * 3,
+    double: (state) => state.count * 3
   },
   actions: {
     increment() {
-      this.count++;
+      this.count++
     }
   }
 })

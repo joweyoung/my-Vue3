@@ -10,26 +10,28 @@ const val = ref('你好啊')
 const countNew = ref(1)
 let stopWatch = watchEffect(() => {
   if (countNew.value > 100) {
-    ElMessage.success(`count已超过100`);
+    ElMessage.success(`count已超过100`)
     stopWatch()
   }
 })
 console.log('storeToRefs', store.count, store.double)
 
 onMounted(() => {
-  countNew.value =  countNew.value * 2
+  countNew.value = countNew.value * 2
 })
 const doubleCount = () => {
-  countNew.value =  countNew.value * 2
+  countNew.value = countNew.value * 2
 }
 </script>
 
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h2> {{ val }}</h2>
+    <h2>{{ val }}</h2>
     <el-button type="primary" @click="doubleCount">相乘</el-button>
-    <div class="result-line"><span>结果：</span> <span :class="[countNew > 100 ? 'red': 'green']">{{ countNew }}</span></div>
+    <div class="result-line">
+      <span>结果：</span> <span :class="[countNew > 100 ? 'red' : 'green']">{{ countNew }}</span>
+    </div>
     <el-button type="warning" @click="store.increment">相乘（store）</el-button>
     <div>{{ store.double }}</div>
     <h3>

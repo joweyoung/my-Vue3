@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "prepare": "husky install",
-    "commit": "cz"
+    "commit": "npm run format && cz"
   },
   "dependencies": {
     "element-plus": "^2.3.7",
