@@ -1,12 +1,37 @@
 <script setup lang="ts">
+import { useCounterStore } from '@/stores/counter'
+const store = useCounterStore()
+
 defineProps<{
   msg: string
 }>()
+
+const val = ref('你好啊')
+const countNew = ref(1)
+let stopWatch = watchEffect(() => {
+  if (countNew.value > 100) {
+    ElMessage.success(`count已超过100`);
+    stopWatch()
+  }
+})
+console.log('storeToRefs', store.count, store.double)
+
+onMounted(() => {
+  countNew.value =  countNew.value * 2
+})
+const doubleCount = () => {
+  countNew.value =  countNew.value * 2
+}
 </script>
 
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
+    <h2> {{ val }}</h2>
+    <el-button type="primary" @click="doubleCount">相乘</el-button>
+    <div class="result-line"><span>结果：</span> <span :class="[countNew > 100 ? 'red': 'green']">{{ countNew }}</span></div>
+    <el-button type="warning" @click="store.increment">相乘（store）</el-button>
+    <div>{{ store.double }}</div>
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
@@ -15,7 +40,7 @@ defineProps<{
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 h1 {
   font-weight: 500;
   font-size: 2.6rem;
@@ -30,6 +55,17 @@ h3 {
 .greetings h1,
 .greetings h3 {
   text-align: center;
+}
+.result-line {
+  span {
+    color: @theme;
+  }
+  .red {
+    color: red;
+  }
+  .green {
+    color: green;
+  }
 }
 
 @media (min-width: 1024px) {
