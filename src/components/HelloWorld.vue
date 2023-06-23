@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { useCounterStore } from '@/stores/counter'
 const store = useCounterStore()
 
@@ -8,13 +9,16 @@ defineProps<{
 
 const val = ref('你好啊')
 const countNew = ref(1)
+const { double } = storeToRefs(store)
+
 let stopWatch = watchEffect(() => {
+  console.log(double.value)
   if (countNew.value > 100) {
     ElMessage.success(`count已超过100`)
     stopWatch()
   }
 })
-console.log('storeToRefs', store.count, store.double)
+console.log('storeToRefs', store.count, double)
 
 onMounted(() => {
   countNew.value = countNew.value * 2
@@ -22,6 +26,7 @@ onMounted(() => {
 const doubleCount = () => {
   countNew.value = countNew.value * 2
 }
+const computedCount = computed(() => countNew.value * 3)
 </script>
 
 <template>
@@ -31,9 +36,10 @@ const doubleCount = () => {
     <el-button type="primary" @click="doubleCount">相乘</el-button>
     <div class="result-line">
       <span>结果：</span> <span :class="[countNew > 100 ? 'red' : 'green']">{{ countNew }}</span>
+      <span>computedCount：{{ computedCount }}</span>
     </div>
     <el-button type="warning" @click="store.increment">相乘（store）</el-button>
-    <div>{{ store.double }}</div>
+    <div>{{ double }}</div>
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
