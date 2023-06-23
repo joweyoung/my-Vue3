@@ -7,7 +7,7 @@ defineProps<{
   msg: string
 }>()
 
-const val = ref('你好啊')
+const val = ref('你好')
 const countNew = ref(1)
 const { double } = storeToRefs(store)
 
